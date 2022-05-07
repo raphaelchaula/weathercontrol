@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 // Components
+import SwitchesComponent from '../components/switches';
 import Header from '../components/header';
 import DataTable from '../components/datatable';
 import DataLoader from '../components/dataloader';
@@ -25,6 +26,7 @@ const Index = ({ toggleTheme }) => {
   const classes = useStyles();
   const router = useRouter();
   const [data, setData] = React.useState('loading');
+  const [switches, setSwitches] = React.useState(false);
 
   React.useEffect(() => {
     var date = router.query.date ? new Date(router.query.date).toISOString() : new Date().toISOString();
@@ -36,6 +38,15 @@ const Index = ({ toggleTheme }) => {
         } else {
           setData(data);
         }
+      });
+    fetch('/api/viewcontrols')
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          setSwitches(data);
+        }
+      }).catch(() => {
+        return null;
       });
     setInterval(() => {
       fetch('/api/viewdata?date=' + date)
@@ -49,22 +60,32 @@ const Index = ({ toggleTheme }) => {
         }).catch(() => {
           return null;
         });
+      fetch('/api/viewcontrols')
+        .then(res => res.json())
+        .then(data => {
+          if (data) {
+            setSwitches(data);
+          }
+        }).catch(() => {
+          return null;
+        });
     }, 5000);
   }, []);
 
   return (
     <React.Fragment>
       <Head>
-        <title>Omary Mgomba - Temperature & Humidity Control System.</title>
+        <title>Jay Linenyambea - Interactive Greenhouse.</title>
       </Head>
       <Header toggleTheme={toggleTheme} />
       <Container fixed={true} maxWidth="lg" className={classes.root} >
+        <SwitchesComponent switches={switches} />
         {
           data === 'loading'
-            ? <DataLoader/>
+            ? <DataLoader />
             : data === 'DataNotFound'
-              ? <DataNotFound/>
-              : <DataTable rows={data}/>
+              ? <DataNotFound />
+              : <DataTable rows={data} />
         }
       </Container>
     </React.Fragment>

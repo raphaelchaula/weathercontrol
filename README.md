@@ -1,3 +1,3 @@
-# Omary Mgomba
+# Weather Control
 
-Temperature Management System
+Interactive Greenhouse.

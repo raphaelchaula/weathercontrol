@@ -8,7 +8,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Table from '@material-ui/core/Table';
 import moment from 'moment';
-import Clsx from 'clsx';
 
 const useStyles = makeStyles(theme => ({
   head: {
@@ -52,36 +51,42 @@ const StyledTableRow = withStyles((theme) => ({
 const DataTable = ({ rows }) => {
   const classes = useStyles();
   return (
-    <TableContainer >
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell className={classes.head} align="left">Time</StyledTableCell>
-            <StyledTableCell className={classes.head} align="right">Temperature&nbsp;(°C)</StyledTableCell>
-            <StyledTableCell className={classes.head} align="right">Humidify&nbsp;(%)</StyledTableCell>
-            <StyledTableCell className={classes.head} align="right">Sign</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <TableCell align="left" component="th" scope="row">
-                {moment(row.time).format('LT')}
-              </TableCell>
-              <TableCell align="right">{row.temperature}</TableCell>
-              <TableCell align="right">{row.humidity}</TableCell>
-              <TableCell align="right">{
+    <>
+      <TableContainer >
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell className={classes.head} align="left">Time</StyledTableCell>
+              <StyledTableCell className={classes.head} align="right">Level&nbsp;</StyledTableCell>
+              <StyledTableCell className={classes.head} align="right">Moisture&nbsp;(%)</StyledTableCell>
+              <StyledTableCell className={classes.head} align="right">Temperature&nbsp;(°C)</StyledTableCell>
+              <StyledTableCell className={classes.head} align="right">Humidify&nbsp;(%)</StyledTableCell>
+              {/* <StyledTableCell className={classes.head} align="right">Sign</StyledTableCell> */}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <StyledTableRow key={row.name}>
+                <TableCell align="left" component="th" scope="row">
+                  {moment(row.time).format('LT')}
+                </TableCell>
+                <TableCell align="right">{row.level}</TableCell>
+                <TableCell align="right">{row.moisture}</TableCell>
+                <TableCell align="right">{row.temperature}</TableCell>
+                <TableCell align="right">{row.humidity}</TableCell>
+                {/* <TableCell align="right">{
                 row.temperature < 8
                   ? <div className={Clsx(classes.mark, classes.normal)} />
                   : row.temperature < 13
                     ? <div className={Clsx(classes.mark, classes.warning)} />
                     : <div className={Clsx(classes.mark, classes.danger)} />
-              }</TableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+              }</TableCell> */}
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 };
 

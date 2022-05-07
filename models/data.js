@@ -1,5 +1,6 @@
-import mongoose from 'mongoose';
-var Schema = mongoose.Schema;
+/* eslint-disable indent */
+import mongoose from 'mongoose'
+var Schema = mongoose.Schema
 
 var data = new Schema({
   temperature: {
@@ -10,14 +11,22 @@ var data = new Schema({
     type: String,
     required: true
   },
+  level: {
+    type: String,
+    required: true
+  },
+  moisture: {
+    type: String,
+    required: true
+  },
   time: {
     type: Date,
     default: Date.now
   }
-});
+})
 
-mongoose.models = {};
+mongoose.models = {}
 
-var Data = mongoose.model('Data', data);
+var Data = mongoose.model('Data', data)
 
-export default Data;
+export default Data
